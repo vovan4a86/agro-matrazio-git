@@ -65,12 +65,12 @@
                         <div class="cat-view__item">
                             <div class="cat-item">
                                 <a class="cat-item__view lazy"
-                                   data-bg="{{ $category->thumb(1) }}"
-                                   href="{{ $category->url }}" title="{{ $category->name }}"></a>
+                                   data-bg="{{ S::fileSrc($category['image']) }}"
+                                   href="{{ $category['url'] }}" title="{{ $category['name'] }}"></a>
                                 <div class="cat-item__body">
-                                    <a class="cat-item__title" href="{{ $category->url }}">{{ $category->name }}</a>
+                                    <a class="cat-item__title" href="{{ $category['url'] }}">{{ $category['name'] }}</a>
                                     <div class="cat-item__actions">
-                                        <a class="button" href="{{ $category->url }}">Перейти в раздел</a>
+                                        <a class="button" href="{{ $category['url'] }}">Перейти в раздел</a>
                                     </div>
                                 </div>
                             </div>

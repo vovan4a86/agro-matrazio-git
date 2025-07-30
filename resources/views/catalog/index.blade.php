@@ -12,7 +12,7 @@
                     <div class="catalog__main">
                         <!--.prods-view-->
                         <div class="prods-view">
-                            <div class="prods-view__bg lazy" data-bg="static/images/common/prods-view-1.webp"></div>
+                            <div class="prods-view__bg lazy" data-bg="/static/images/common/prods-view-1.webp"></div>
                             <div class="prods-view__body">
                                 <a class="prods-view__head" href="javascript:void(0)">Резиновые маты для содержания
                                     КРС</a>
@@ -60,7 +60,7 @@
                     <div class="catalog__other">
                         <!--.prods-view-->
                         <div class="prods-view">
-                            <div class="prods-view__bg lazy" data-bg="static/images/common/prods-view-2.webp"></div>
+                            <div class="prods-view__bg lazy" data-bg="/static/images/common/prods-view-2.webp"></div>
                             <div class="prods-view__body">
                                 <a class="prods-view__head" href="javascript:void(0)">Стальные каркасы для ферм</a>
                             </div>
@@ -70,29 +70,20 @@
                         <!--.brand-label-->
                         <div class="brand-label">
                             <span class="brand-label__title">В комплекте всегда выгоднее!</span>
-                            <img class="brand-label__img no-select" src="static/images/common/brand-label.svg"
+                            <img class="brand-label__img no-select" src="/static/images/common/brand-label.svg"
                                  width="168" height="57" alt="alt" loading="lazy"/>
                         </div>
                     </div>
                 </div>
-                <div class="catalog__titles">
-                    <div class="page__subtitle">При покупке любого стойлового оборудования производства «Завода
-                        Агросталь» вы получаете индивидуальные условия на приобретение резиновых покрытий для вашей
-                        фермы
+                @if($feats = S::get('catalog_features'))
+                    <div class="catalog__titles">
+                        @foreach($feats as $feat)
+                            <div class="page__subtitle">{{ $feat }}</div>
+                        @endforeach
                     </div>
-                    <div class="page__subtitle">Мы долгие годы сотрудничаем с проектными организациями и производителями
-                        стальных каркасов для коровников.
-                    </div>
-                </div>
+                @endif
                 <div class="catalog__text text-block">
-                    <p>При обращении к нам, мы заложим на этапе проектирования стойловое оборудование производства
-                        «Завода Агросталь».</p>
-                    <p>Вы получите каркас по цене завода изготовителя с готовой планировкой стойлового оборудования,
-                        понятным качеством и сроками поставки. Это позволит сэкономить ваши средства и время при
-                        проектировании, монтаже и вводе в эксплуатацию объекта.</p>
-                    <p>
-                        <strong>За подробной консультацией обращайтесь в отдел продаж «Агросталь Комплект»</strong>
-                    </p>
+                    {!! $text !!}
                 </div>
             </div>
         </section>
