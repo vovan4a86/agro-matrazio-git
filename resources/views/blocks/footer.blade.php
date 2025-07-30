@@ -53,7 +53,7 @@
                                     </a>
                                 </li>
                             @endif
-                            @if($email = S::get('header_email'))
+                            @if($email = S::get('footer_email'))
                                 <li class="links__item">
                                     <a class="links__link" href="mailto:{{ $email }}">
                                         <span class="links__icon lazy"
@@ -64,7 +64,7 @@
                             @endif
                         </ul>
                     </div>
-                    @if($phone = S::get('header_phone'))
+                    @if($phone = S::get('footer_phone'))
                         <div class="footer__phone">
                             <a class="phone" href="tel:{{ SiteHelper::clearPhone($phone) }}" title="Позвонить нам" aria-label="Позвонить нам">
 									<span class="phone__body">
