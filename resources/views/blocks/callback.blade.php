@@ -6,7 +6,7 @@
                 <div class="s-callback__title">Если у Вас есть вопросы, напишите нам</div>
                 <div class="s-callback__subtitle">мы с удовольствием ответим в ближайшее время</div>
                 <div class="s-callback__policy">* Нажимая кнопку Отправить, вы соглашаетесь с
-                    <a href="javascript:void(0)">Политикой конфиденциальности</a>
+                    <a href="{{ url('policy') }}">Политикой конфиденциальности</a>
                 </div>
             </div>
             <div class="s-callback__col">

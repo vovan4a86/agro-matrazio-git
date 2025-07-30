@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Classes\SiteHelper;
 use Cache;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Fanky\Admin\Models\Brand;
 use Fanky\Admin\Models\Catalog;
 use Fanky\Admin\Models\Page;
 use Fanky\Admin\Models\Product;
@@ -30,112 +29,15 @@ class CatalogController extends Controller
         $page->h1 = $page->getH1();
         $page->setSeo();
 
-        if (!$per_page = session('per_page')) {
-            $per_page = 6;
-            session(['per_page' => $per_page]);
-        }
+        $categories = Catalog::public()
+            ->where('parent_id', 0)
+            ->get();
 
-        $categories = Catalog::getTopLevelOnList();
-
-        $products_ids = Product::public()
-            ->pluck('id')
-            ->all();
-
-        $filter_data = request()->except(['page', 'brand', 'price_from', 'price_to']);
-        $filter_brand = request()->only('brand');
-        $filter_price_from = request()->get('price_from');
-        $filter_price_to = request()->get('price_to');
-
-        $products_query = Product::whereIn('id', $products_ids)
-            ->public();
-
-        if ($filter_price_from && $filter_price_to) {
-            $products_query = $products_query
-                ->where('price', '>=', $filter_price_from)
-                ->where('price', '<=', $filter_price_to);
-        }
-
-        if ($filter_brand) {
-            $products_query = $products_query->whereIn('brand_id', $filter_brand);
-        }
-
-        foreach ($filter_data as $name => $values) {
-            $products_query = $products_query->whereIn($name, $values);
-        }
-
-        //filter data
-        $products_count = $products_query->count();
-        $products_count = $products_count . ' ' . SiteHelper::getNumEnding($products_count);
-        $filter_min_price = (int)$products_query->min('price');
-        $filter_max_price = (int)$products_query->max('price');
-
-        $filter_brands = Brand::orderBy('name')
-            ->pluck('name', 'id')
-            ->all();
-        $filter_countries = Brand::orderBy('country')
-            ->where('country', '!=', '')
-            ->pluck('country', 'id')
-            ->all();
-
-        $filters_list = Cache::get('filters_list', []);
-        if(!$filters_list) {
-            foreach (Catalog::$filters as $name => $ru_name) {
-                $filters_list[$name] = [
-                    'name' => $ru_name,
-                    'values' => Product::where($name, '<>', '')
-                        ->distinct()
-                        ->orderBy($name)
-                        ->pluck($name)
-                        ->all()
-                ];
-            }
-            Cache::add('filters_list', $filters_list, now()->addMinutes(60));
-        }
-
-        $products = $products_query->with(['single_image', 'catalog', 'brand'])
-            ->orderBy('in_stock', 'desc')
-            ->orderBy('catalog_id')
-            ->paginate(S::get('products_per_page', 9));
-
-        if(request()->ajax()) {
-            $view_items = [];
-            foreach ($products as $item) {
-                $view_items[] = view(
-                    'catalog.product_card',
-                    [
-                        'product' => $item
-                    ]
-                )->render();
-            }
-            \Debugbar::log($products_count);
-
-
-            $pagination = view('paginations.with_pages', ['paginator' => $products])->render();
-            $products_count = view('catalog.filter_title', ['products_count' => $products_count])->render();
-
-            return response()->json(
-                [
-                    'items' => $view_items,
-                    'pagination' => $pagination,
-                    'count' => $products_count
-                ]
-            );
-        }
-
-        return view('catalog.category', [
+        return view('catalog.index', [
             'h1' => $page->h1,
             'text' => $page->text,
-            'title' => $page->title,
             'bread' => $bread,
-            'filter_data' => $filter_data,
-            'categories' => $categories,
-            'products_count' => $products_count,
-            'products' => $products,
-            'filter_min_price' => $filter_min_price,
-            'filter_max_price' => $filter_max_price,
-            'filter_brands' => $filter_brands,
-            'filter_countries' => $filter_countries,
-            'filters_list' => $filters_list
+            'categories' => $categories
         ]);
     }
 

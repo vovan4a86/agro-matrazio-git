@@ -12,7 +12,8 @@ class WelcomeController extends Controller {
         $page->setSeo();
 
         $main_slider = S::get('main_slider');
-        $main_categories = Catalog::where('parent_id',0)
+        $main_categories = Catalog::public()
+            ->where('parent_id',0)
             ->where('on_main',1)
             ->get();
 

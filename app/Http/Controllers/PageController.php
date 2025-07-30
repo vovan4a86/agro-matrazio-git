@@ -73,18 +73,17 @@ class PageController extends Controller {
         return $response;
     }
 
-    public function policy()
+    public function contacts()
     {
-        $page = Page::whereAlias('policy')->first();
+        $page = Page::whereAlias('contacts')->first();
         if (!$page)
             abort(404, 'Страница не найдена');
         $bread = $page->getBread();
         $page->ogGenerate();
         $page->setSeo();
 
-        return view('pages.text', [
+        return view('pages.contacts', [
             'page' => $page,
-            'text' => $page->text,
             'h1'    => $page->getH1(),
             'bread' => $bread,
         ]);
