@@ -150,4 +150,5 @@
             @endif
         </section>
     </main>
+    @include('blocks.callback')
 @stop

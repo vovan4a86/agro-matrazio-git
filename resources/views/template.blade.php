@@ -13,8 +13,6 @@
     @include('blocks.overlay')
 
     @yield('content')
-
-    @include('blocks.callback')
     @include('blocks.footer')
     @include('blocks.popups')
 
