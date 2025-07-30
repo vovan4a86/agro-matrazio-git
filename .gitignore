@@ -18,6 +18,6 @@
 /resources/.last_update
 
 # Project exclude paths
-/storage/app/
-/storage/debugbar/
-/storage/framework/
+/storage/app/*
+/storage/debugbar/*
+/storage/framework/*

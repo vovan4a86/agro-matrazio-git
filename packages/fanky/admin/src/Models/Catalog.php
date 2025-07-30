@@ -72,19 +72,8 @@ class Catalog extends Model {
     const UPLOAD_URL = '/uploads/catalogs/';
 
 	public static $thumbs = [
-		1 => '80x100', //admin
-		2 => '220x210', //main page category
-        3 => '131x90', //product thumb slider
-        4 => '645x564', //product slider
+		1 => '80x80', //admin
 	];
-
-    public static $filters = [
-//        'brand_id' => 'Бренд',
-        'manufacturer' => 'Страна производства',
-        'material' => 'Материал',
-        'type' => 'Тип',
-        'handle' => 'Ручка',
-    ];
 
 	public static function boot() {
 		parent::boot();

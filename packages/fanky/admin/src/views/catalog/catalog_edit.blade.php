@@ -48,8 +48,8 @@
                         <div id="article-image-block">
                             @if ($catalog->image)
                                 <img class="img-polaroid"
-                                     src="{{ $catalog->image_src }}" height="100"
-                                     data-image="{{ $catalog->thumb(1) }}"
+                                     src="{{ $catalog->thumb(1) }}"
+                                     data-image="{{$catalog->image_src }}"
                                      onclick="return popupImage($(this).data('image'))" alt="image">
                             @else
                                 <p class="text-yellow">Изображение не загружено.</p>
@@ -77,9 +77,6 @@
                         <ul>
                             <li>{name} - название товара</li>
                             <li>{lower_name} - название товара в нижнем регистре</li>
-                            <li>{gost} - поле товара - Гост</li>
-                            <li>{steel} - поле товара - Марка стали</li>
-                            <li>{weight} - поле товара - Вес</li>
                         </ul>
                         Перед кодом {city} пробел не нужен. Шаблон применяется ко всем подразделам, если у них нет
                         своего шаблона
@@ -88,6 +85,8 @@
 
                 {!! Form::hidden('published', 0) !!}
                 {!! Form::groupCheckbox('published', 1, $catalog->published, 'Показывать раздел') !!}
+                {!! Form::hidden('on_main', 0) !!}
+                {!! Form::groupCheckbox('on_main', 1, $catalog->on_main, 'На главной') !!}
             </div>
 
             <div class="tab-pane" id="tab_2">

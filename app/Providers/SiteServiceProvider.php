@@ -1,9 +1,9 @@
 <?php namespace App\Providers;
 
-use Fanky\Admin\Models\Catalog;
 use Cache;
 use Illuminate\Support\ServiceProvider;
 use View;
+use Fanky\Admin\Models\Catalog;
 use Fanky\Admin\Models\Page;
 
 class SiteServiceProvider extends ServiceProvider {
@@ -51,7 +51,6 @@ class SiteServiceProvider extends ServiceProvider {
                     ->where('on_footer', 1)
                     ->orderBy('order')
                     ->get();
-                $footer_menu = $footer_menu->chunk(5);
                 Cache::add('footer_menu', $footer_menu, now()->addMinutes(60));
             }
 
