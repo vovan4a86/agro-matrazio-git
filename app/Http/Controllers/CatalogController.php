@@ -91,7 +91,7 @@ class CatalogController extends Controller
             'category' => $category,
             'text' => $category->text,
             'h1' => $category->getH1(),
-            'products' => $category->products
+            'products' => $category->products()->public()->get()
         ];
 
         return view('catalog.category', $data);
