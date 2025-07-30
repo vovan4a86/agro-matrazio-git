@@ -91,11 +91,6 @@
                     <th width="40"></th>
                     <th width="100"></th>
                     <th>Название</th>
-                    <th width="100" style="text-align: center">Размер</th>
-                    <th width="100" style="text-align: center">Бренд</th>
-                    <th width="100" style="text-align: center">Цена</th>
-                    <th width="100" style="text-align: center">Старая цена</th>
-                    <th width="60" style="text-align: center">Изм.</th>
                     <th width="130" style="text-align: center">Сортировка</th>
                     <th width="50"></th>
                 </tr>
@@ -114,8 +109,6 @@
                         <td>
                             @if ($img = $item->single_image)
                                 <img src="{{ $img->thumb(1) }}" height="100" width="100" alt="photo">
-                            @elseif($item->catalog->image)
-                                <img src="{{ $item->catalog->thumb(1) }}" height="100" width="100" alt="photo">
                             @endif
                         </td>
                         <td>
@@ -130,15 +123,6 @@
                                 @endif
                             </a>
                         </td>
-                        <td width="100" style="text-align: center; text-decoration-style: {{ $item->old_price !== 0 ? 'line-through' : 'none' }}">
-                            {{ $item->sizes }}
-                        </td>
-                        <td width="100" style="text-align: center">{{ $item->brand ? $item->brand->name : '-' }}</td>
-                        <td width="100" style="text-align: center">{{ $item->price_format }}</td>
-                        <td width="100" style="text-align: center; text-decoration-style: {{ $item->old_price !== 0 ? 'line-through' : 'none' }}">
-                            {{ $item->old_price_format }}
-                        </td>
-                        <td width="60" style="text-align: center">{{ $item->measure ?: 'шт' }}</td>
                         <td style="text-align: center">
                             <form class="input-group input-group-sm"
                                   action="{{ route('admin.catalog.update-order', [$item->id]) }}"

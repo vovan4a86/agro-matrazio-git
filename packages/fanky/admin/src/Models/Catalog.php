@@ -72,7 +72,14 @@ class Catalog extends Model {
     const UPLOAD_URL = '/uploads/catalogs/';
 
 	public static $thumbs = [
-		1 => '80x80', //admin
+		1 => '100x100', //admin
+		2 => '845x576', //big one
+		3 => '417x292', //small one
+	];
+
+	public static $preview_thumbs = [
+		1 => '200x100', //admin
+        2 => '1200x440'
 	];
 
 	public static function boot() {

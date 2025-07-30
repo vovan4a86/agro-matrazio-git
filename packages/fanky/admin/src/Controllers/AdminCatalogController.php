@@ -132,10 +132,8 @@ class AdminCatalogController extends AdminController
         if (!array_get($data, 'on_footer_menu')) {
             $data['on_footer_menu'] = 0;
         }
-        if (!array_get($data, 'discount_delivery')) {
-            $data['discount_delivery'] = 0;
-        }
         $image = Request::file('image');
+        $image_text_preview = Request::file('image_text_preview');
 
         // валидация данных
         $validator = Validator::make(
@@ -151,6 +149,11 @@ class AdminCatalogController extends AdminController
         if ($image) {
             $file_name = Catalog::uploadImage($image);
             $data['image'] = $file_name;
+        }
+        // Загружаем превью текста
+        if ($image_text_preview) {
+            $file_prev_name = Catalog::uploadPreviewImage($image_text_preview);
+            $data['image_text_preview'] = $file_prev_name;
         }
 
         // сохраняем страницу
@@ -178,6 +181,16 @@ class AdminCatalogController extends AdminController
     {
         $catalog = Catalog::findOrFail($id);
         $catalog->delete();
+
+        return ['success' => true];
+    }
+
+    public function postCatalogDeletePreview($id) {
+        $catalog = Catalog::find($id);
+        if(!$catalog) return ['success' => false, 'error' => 'Раздел не найден'];
+
+        $catalog->deletePreviewImage();
+        $catalog->update(['image_text_preview' => null]);
 
         return ['success' => true];
     }
@@ -222,15 +235,9 @@ class AdminCatalogController extends AdminController
 
         $catalogs = Catalog::getCatalogList();
 
-        $brands = Brand::pluck('name', 'id')->all();
-
         $data = [
             'product' => $product,
             'catalogs' => $catalogs,
-            'brands' => $brands,
-            'pinned_catalogs' => $pinned_catalogs,
-            'additional_catalogs' => $product->additional_catalogs,
-            'related' => $product->related,
         ];
         return view('admin::catalog.product_edit', $data);
     }
@@ -239,8 +246,6 @@ class AdminCatalogController extends AdminController
     {
         $id = Request::get('id');
         $data = Request::except(['id', 'chars', 'additional_catalog', 'related']);
-        $additional_catalogs = array_filter(array_unique(Request::get('additional_catalog', [])));
-        $related = Request::get('related', []);
 
         if (!array_get($data, 'published')) {
             $data['published'] = 0;
@@ -253,15 +258,6 @@ class AdminCatalogController extends AdminController
         }
         if (!array_get($data, 'h1')) {
             $data['h1'] = $data['name'];
-        }
-        if (!array_get($data, 'in_stock')) {
-            $data['in_stock'] = 0;
-        }
-        if (!array_get($data, 'is_new')) {
-            $data['is_new'] = 0;
-        }
-        if (!array_get($data, 'is_popular')) {
-            $data['is_popular'] = 0;
         }
 
         $rules = [
@@ -290,8 +286,6 @@ class AdminCatalogController extends AdminController
         } else {
             $product->update($data);
         }
-        $product->additional_catalogs()->sync($additional_catalogs);
-        $product->related()->sync($related);
 
         return $redirect
             ? ['redirect' => route('admin.catalog.productEdit', $product->id)]
@@ -303,6 +297,16 @@ class AdminCatalogController extends AdminController
         $sorted = Request::input('sorted', []);
         foreach ($sorted as $order => $id) {
             DB::table('products')->where('id', $id)->update(array('order' => $order));
+        }
+
+        return ['success' => true];
+    }
+
+    public function postProductParamReorder(): array
+    {
+        $sorted = Request::input('sorted', []);
+        foreach ($sorted as $order => $id) {
+            DB::table('product_params')->where('id', $id)->update(array('order' => $order));
         }
 
         return ['success' => true];

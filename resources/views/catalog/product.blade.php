@@ -1,226 +1,157 @@
 @extends('template')
 @section('content')
-    <div class="layout body-content">
-        @include('blocks.bread')
-        <div class="layout__container layout__container--column">
-            <div class="layout__heading container">
-                <div class="title title--small">{{ $h1 }}</div>
-            </div>
-            <main class="layout__body">
-                <!--.product-->
-                <div class="product container">
-                    <div class="product__grid">
-                        <div class="product__col">
-                            @if(count($images))
-                                <div class="product__sliders">
-                                    <div class="product__slider-prod swiper" data-product-slider="data-product-slider">
-                                        <div class="product__slider-wrapper swiper-wrapper">
-                                            @foreach($images as $image)
-                                                <a class="product__slide swiper-slide" href="{{ $image->image_src }}"
-                                                   data-fancybox="data-fancybox" title="{{ $product->name }}">
-                                                    <img class="product__view" src="{{ $image->thumb(4) }}" width="639"
-                                                         height="527" alt="{{ $product->name }}" loading="lazy"/>
-                                                </a>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="product__slider-nav swiper" data-product-nav="data-product-nav">
-                                        <div class="product__slider-wrapper swiper-wrapper">
-                                            @foreach($images as $image)
-                                                <div class="product__slide swiper-slide">
-                                                    <img class="product__thumb" src="{{ $image->thumb(3) }}" width="131"
-                                                         height="87" alt="{{ $product->name }}" loading="lazy"/>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                            @elseif($image)
-                                <div class="product__sliders">
-                                    <div class="product__slider-prod swiper" data-product-slider="data-product-slider">
-                                        <div class="product__slider-wrapper swiper-wrapper">
-                                            <a class="product__slide swiper-slide" href="{{ $image }}"
-                                               data-fancybox="data-fancybox" title="{{ $product->name }}">
-                                                <img class="product__view" src="{{ $product->catalog->thumb(4) }}" width="639"
-                                                     height="527" alt="{{ $product->name }}" loading="lazy"/>
+    @include('blocks.bread')
+    <main>
+        <!--section.product.page-->
+        <section class="product page">
+            <div class="product__container container">
+                <div class="product__heading page__heading">
+                    <div class="product__title page__title">{{ $h1 }}</div>
+                </div>
+                <div class="product__grid">
+                    <div class="product__slider">
+                        <!--.slider.splide(aria-label=title data-product-slider)-->
+                        <div class="slider splide" aria-label="{{ $product->name }}"
+                             data-product-slider="data-product-slider">
+                            <div class="slider__track splide__track">
+									<span class="slider__icon">
+										<svg class="svg-sprite-icon icon-zoom" width="1em" height="1em">
+											<use xlink:href="/static/images/sprite/symbol/sprite.svg#zoom"></use>
+										</svg>
+									</span>
+                                <ul class="slider__list splide__list">
+                                    @foreach($images as $image)
+                                        <li class="slider__slide splide__slide">
+                                            <a class="slider__link" href="{{ $image->image_src }}"
+                                               data-fancybox="product-gallery" data-caption="{{ $product->name }}"
+                                               title="{{ $product->name }}">
+                                                <img class="slider__img" src="{{ $image->thumb(3) }}" width="407"
+                                                     height="407" alt="{{ $product->name }}" loading="lazy"/>
                                             </a>
-                                        </div>
-                                    </div>
-                                    <div class="product__slider-nav swiper" data-product-nav="data-product-nav">
-                                        <div class="product__slider-wrapper swiper-wrapper">
-                                            <div class="product__slide swiper-slide">
-                                                <img class="product__thumb" src="{{ $product->catalog->thumb(3) }}" width="131"
-                                                     height="87" alt="{{ $product->name }}" loading="lazy"/>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="slider__nav">
+                                <div class="slider__arrows splide__arrows">
+                                    <button class="slider__arrow splide__arrow splide__arrow--prev btn-reset"
+                                            type="button" aria-label="Предыдущий слайд">
+                                        <svg class="svg-sprite-icon icon-caret-right--small" width="1em" height="1em">
+                                            <use xlink:href="/static/images/sprite/symbol/sprite.svg#caret-right--small"></use>
+                                        </svg>
+                                    </button>
+                                    <button class="slider__arrow splide__arrow splide__arrow--next btn-reset"
+                                            type="button" aria-label="Следующий слайд">
+                                        <svg class="svg-sprite-icon icon-caret-right--small" width="1em" height="1em">
+                                            <use xlink:href="/static/images/sprite/symbol/sprite.svg#caret-right--small"></use>
+                                        </svg>
+                                    </button>
                                 </div>
-                            @endif
+                            </div>
+                            <div class="slider__pagination splide__pagination"></div>
                         </div>
-                        <div class="product__col">
-                            <div class="product__head">
-                                <div class="product__head-stock">
-                                    <!-- not availability? add class is-out (class="c-availability is-out")-->
-                                    <div class="c-availability is-wide {{ $product->in_stock ? '' : 'is-out' }}">
-                                        {{ $product->in_stock ? 'В наличии' : 'под заказ'}}
-                                    </div>
-                                </div>
-                                @if($product->brand_id > 0)
-                                    <div class="product__head-info">
-                                        <div class="product__manufacturer">Производитель:
-                                            <span>{{ $product->brand->name }}{{ $product->manufacturer ? ', '.$product->manufacturer : '' }}</span>
-                                        </div>
-                                        <a class="product__brand" href="{{ $product->brand->url }}"
-                                           title="Все окна {{ $product->brand->name }}">
-                                            @if($product->brand->image)
-                                                <img class="product__brand-img" src="{{ $product->brand->image_src }}"
-                                                     width="129" height="41"
-                                                     alt="{{ $product->brand->name }} {{ $product->manufacturer ? ', '.$product->manufacturer : '' }}"
-                                                     loading="lazy"/>
-                                            @else
-                                                <span>{{ $product->brand->name }}</span>
-                                            @endif
-                                        </a>
-                                    </div>
-                                @endif
+                    </div>
+                    <div class="product__body">
+                        <div class="product__heading page__heading">
+                            <div class="product__title page__subtitle">Cow mattress type 1</div>
+                        </div>
+                        @if($text)
+                            <div class="product__text text-block">
+                                {!! $text !!}
                             </div>
-                            <div class="product__content text-block">
-                                @if($product->text)
-                                    <h4>Описание модели:</h4>
-                                    {!! $product->text !!}
-                                @endif
-
-                                <div class="product__pricing">
-                                    @if($product->price > 0)
-                                        <div class="product__price">{{ $product->priceFormat }}
-                                            &nbsp;руб/{{ $product->measure ?: 'шт' }}</div>
-                                    @else
-                                        <div class="product__price">Цена по запросу</div>
-                                    @endif
-
-                                    @if($product->old_price > 0)
-                                        <div class="product__price product__price--old">
-                                            <del>{{ $product->oldPriceFormat }}&nbsp;руб/{{ $product->measure }}</del>
-                                        </div>
-                                    @endif
+                        @endif
+                        @if(count($params))
+                            <div class="product__data">
+                                <!--.data-->
+                                <div class="data">
+                                    <div class="data__title">Характеристики</div>
+                                    @foreach($params as $param)
+                                        <dl class="data__list">
+                                            <dt class="data__key">{{ $param->name }}</dt>
+                                            <dd class="data__value">{{ $param->value }}</dd>
+                                        </dl>
+                                    @endforeach
                                 </div>
                             </div>
-                            <div class="product__controls">
-                                <span>Количество:</span>
-                                <div class="product__counter">
-                                    <div class="counter" data-counter="data-counter">
-                                        <button class="counter__btn counter__btn--prev btn-reset" type="button"
-                                                aria-label="Меньше">
-                                            <span class="iconify" data-icon="ic:round-minus" data-width="14"></span>
-                                        </button>
-                                        <input class="counter__input input-reset" type="number" name="count"
-                                               value="{{ Cart::ifInCartGetCount($product->id) ? Cart::ifInCartGetCount($product->id) : 1 }}"
-                                               data-count="data-count"
-                                               data-id="{{ Cart::ifInCart($product->id) ? $product->id : null }}"/>
-                                        <button class="counter__btn counter__btn--next btn-reset" type="button"
-                                                aria-label="Больше">
-                                            <span class="iconify" data-icon="ic:round-plus" data-width="14"></span>
-                                        </button>
-                                    </div>
-                                    <div class="product__counter-value">шт.</div>
-                                </div>
-                            </div>
-                            <div class="product__actions">
-                                @include('catalog.product_add_btn')
-                                <button class="btn btn--outlined btn--small btn-reset" type="button"
-                                        aria-label="Купить в 1 клик" data-popup="data-popup"
-                                        data-src="#order"
-                                        data-image="{{ $product->image ? $product->single_image->thumb(1) : $product->single_catalog_image }}"
-                                        data-title="{{ $product->name }}">
-                                    <span>Купить в 1 клик</span>
-                                </button>
-                            </div>
+                        @endif
+                        <div class="product__actions">
+                            <button class="button button--light btn-reset" type="button" data-popup="data-popup"
+                                    data-src="#order-popup" aria-label="Оставить заявку">
+                                <svg class="svg-sprite-icon icon-badge" width="1em" height="1em">
+                                    <use xlink:href="/static/images/sprite/symbol/sprite.svg#badge"></use>
+                                </svg>
+                                Оставить заявку
+                            </button>
                         </div>
                     </div>
                 </div>
-                <!--.prod-data-->
-                <div class="prod-data">
-                    <div class="container">
-                        <div class="title title--small">Характеристики</div>
-                        <!--dl.data-list.-columns-->
-                        <dl class="data-list data-list--columns">
-                            @if($product->brand_id > 0)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">Бренд</dt>
-                                    <dd class="data-list__value">{{ $product->brand->name }}</dd>
-                                </div>
-                            @endif
-                            @if($product->country)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">Страна производства</dt>
-                                    <dd class="data-list__value">{{ $product->country }}</dd>
-                                </div>
-                            @endif
-                            @if($product->sizes)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">Размеры, см</dt>
-                                    <dd class="data-list__value">{{ $product->sizes }}</dd>
-                                </div>
-                            @endif
-                            @if($product->material)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">Материал</dt>
-                                    <dd class="data-list__value">{{ $product->material }}</dd>
-                                </div>
-                            @endif
-                            @if($product->square)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">Площадь остекления, м2</dt>
-                                    <dd class="data-list__value">{{ $product->square }}</dd>
-                                </div>
-                            @endif
-                            @if($product->type)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">Тип</dt>
-                                    <dd class="data-list__value">{{ $product->type }}</dd>
-                                </div>
-                            @endif
-                            @if($product->handle)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">Ручка</dt>
-                                    <dd class="data-list__value">{{ $product->handle }}</dd>
-                                </div>
-                            @endif
-                            @if($product->configuration)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">Конфигурация</dt>
-                                    <dd class="data-list__value">{{ $product->configuration }}</dd>
-                                </div>
-                            @endif
-                            @foreach($params as $param)
-                                <div class="data-list__item">
-                                    <dt class="data-list__key">{{ $param->name }}</dt>
-                                    <dd class="data-list__value">{{ $param->value ?: 'Да' }}</dd>
-                                </div>
-                            @endforeach
-                        </dl>
-                    </div>
+            </div>
+        </section>
+        <!--section.seo.is-gray-->
+        <section class="seo is-gray">
+            <div class="seo__container container">
+                <div class="seo__text text-block">
+                    <p>
+                        <strong>Мы долгие годы сотрудничаем с проектными организациями и производителями стальных
+                            каркасов для коровников.</strong>&nbsp; При обращении к нам, мы заложим на этапе
+                        проектирования стойловое оборудование производства «Завода Агросталь».</p>
+                    <p>Вы получите каркас по цене завода изготовителя с готовой планировкой стойлового оборудования,
+                        понятным качеством и сроками поставки. Это позволит сэкономить ваши средства и время при
+                        проектировании, монтаже и вводе в эксплуатацию объекта.</p>
                 </div>
-                <!--.prod-data.-gray-->
-                @if($product->text)
-                    <div class="prod-data prod-data--gray">
-                        <div class="container">
-                            <div class="title title--small">Описание</div>
-                            <div class="text-block">
-                                {!! $product->text !!}
+            </div>
+        </section>
+        <!--section.s-about.-small-->
+        <section class="s-about s-about--small">
+            <div class="s-about__bottom">
+                <div class="s-about__container container">
+                    <div class="s-about__heading page__heading">
+                        <div class="s-about__title page__title">Преимущества работы с нами</div>
+                    </div>
+                    <div class="s-about__feats">
+                        <!--.feat-item-->
+                        <div class="feat-item">
+                            <div class="feat-item__view">
+                                <div class="feat-item__icon lazy" data-bg="/static/images/common/feat-icon-1.svg"></div>
                             </div>
+                            <div class="feat-item__title">Комплексный подход</div>
+                        </div>
+                        <!--.feat-item-->
+                        <div class="feat-item">
+                            <div class="feat-item__view">
+                                <div class="feat-item__icon lazy" data-bg="/static/images/common/feat-icon-2.svg"></div>
+                            </div>
+                            <div class="feat-item__title">Опыт с 2008 года</div>
+                        </div>
+                        <!--.feat-item-->
+                        <div class="feat-item">
+                            <div class="feat-item__view">
+                                <div class="feat-item__icon lazy" data-bg="/static/images/common/feat-icon-3.svg"></div>
+                            </div>
+                            <div class="feat-item__title">Высокое качество продукции</div>
+                        </div>
+                        <!--.feat-item-->
+                        <div class="feat-item">
+                            <div class="feat-item__view">
+                                <div class="feat-item__icon lazy" data-bg="/static/images/common/feat-icon-4.svg"></div>
+                            </div>
+                            <div class="feat-item__title">Сотни довольных клиентов</div>
                         </div>
                     </div>
-                @endif
-
-                @include('blocks.questions')
-
-                @include('catalog.need')
-
-                @include('catalog.similar')
-
-                @include('blocks.our_features')
-            </main>
-        </div>
-    </div>
+                    <div class="s-about__brand">
+                        <!--+brand-label()(class="brand-label--small")-->
+                        <!--.brand-label-->
+                        <div class="brand-label brand-label--small">
+                            <span class="brand-label__title">В комплекте всегда выгоднее!</span>
+                            <img class="brand-label__img no-select" src="/static/images/common/brand-label.svg"
+                                 width="168" height="57" alt="alt" loading="lazy"/>
+                        </div>
+                    </div>
+                </div>
+                <img class="s-about__decor no-select" src="/static/images/common/about-decor.png" width="410"
+                     height="507" loading="lazy" alt="Агросталь-Комплект"/>
+            </div>
+        </section>
+    </main>
+    @include('blocks.callback')
 @endsection

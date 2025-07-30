@@ -8,6 +8,7 @@ use Thumb;
 
 trait HasImage{
 	public $image_field = 'image';
+	public $image_preview_field = 'image_text_preview';
 
 	public function deleteImage($thumbs = null, $upload_url = null) {
 		if(!$this->{$this->image_field}) return;
@@ -25,9 +26,30 @@ trait HasImage{
 		@unlink(public_path($upload_url . $this->{$this->image_field}));
 	}
 
+	public function deletePreviewImage($thumbs = null, $upload_url = null) {
+		if(!$this->{$this->image_preview_field}) return;
+		if(!$thumbs){
+			$thumbs = self::$preview_thumbs;
+		}
+		if(!$upload_url){
+			$upload_url = self::UPLOAD_URL;
+		}
+
+		foreach ($thumbs as $thumb => $size){
+			$t = Thumb::url($upload_url . $this->{$this->image_preview_field}, $thumb);
+			@unlink(public_path($t));
+		}
+		@unlink(public_path($upload_url . $this->{$this->image_preview_field}));
+	}
+
 	public function getImageSrcAttribute() {
 		return $this->{$this->image_field} ?
             url(self::UPLOAD_URL . $this->{$this->image_field}) : null;
+	}
+
+	public function getImagePreviewSrcAttribute() {
+		return $this->{$this->image_preview_field} ?
+            url(self::UPLOAD_URL . $this->{$this->image_preview_field}) : null;
 	}
 
 	public function thumb($thumb) {
@@ -49,6 +71,25 @@ trait HasImage{
 		};
 	}
 
+	public function preview_thumb($thumb) {
+		if (!$this->{$this->image_preview_field}) {
+			return null;
+		} else {
+			$file = public_path(self::UPLOAD_URL . $this->{$this->image_preview_field});
+			$file = str_replace(['\\\\', '//'], DIRECTORY_SEPARATOR, $file);
+			$file = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $file);
+
+			if (!is_file(public_path(Thumb::url(self::UPLOAD_URL . $this->{$this->image_preview_field}, $thumb)))) {
+				if (!is_file($file))
+					return null; //нет исходного файла
+				//создание миниатюры
+				Thumb::make(self::UPLOAD_URL . $this->{$this->image_preview_field}, self::$preview_thumbs);
+			}
+
+			return url(Thumb::url(self::UPLOAD_URL . $this->{$this->image_preview_field}, $thumb));
+		}
+	}
+
 	/**
 	 * @param \Illuminate\Http\UploadedFile $image
 	 * @return string
@@ -56,26 +97,21 @@ trait HasImage{
 	public static function uploadImage($image) {
 		$file_name = md5(uniqid(rand(), true)) . '_' . time() . '.' . Str::lower($image->getClientOriginalExtension());
 		$image->move(public_path(self::UPLOAD_URL), $file_name);
-        $image = ImageManager::gd()->read(public_path(self::UPLOAD_URL . $file_name))
-            ->resize(1920, 1080);
+        $image = ImageManager::gd()->read(public_path(self::UPLOAD_URL . $file_name));
 
         $image->save(null, Settings::get('image_quality', 100));
 		Thumb::make(self::UPLOAD_URL . $file_name, self::$thumbs);
 		return $file_name;
 	}
+	public static function uploadPreviewImage($image) {
+		$file_name = md5(uniqid(rand(), true)) . '_' . time() . '.' . Str::lower($image->getClientOriginalExtension());
+		$image->move(public_path(self::UPLOAD_URL), $file_name);
+        $image = ImageManager::gd()->read(public_path(self::UPLOAD_URL . $file_name));
 
-    public static function uploadCustomImage($image) {
-        $file_name = md5(uniqid(rand(), true)) . '_' . time() . '.' . Str::lower($image->getClientOriginalExtension());
-        $image->move(public_path(self::UPLOAD_URL . 'custom/'), $file_name);
-        Image::make(public_path(self::UPLOAD_URL . 'custom/' . $file_name))
-            ->resize(1920, 1080, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })
-            ->save(null, Settings::get('image_quality', 100));
-        Thumb::make(self::UPLOAD_URL . 'custom/' . $file_name, self::$thumbs);
-        return $file_name;
-    }
+        $image->save(null, Settings::get('image_quality', 100));
+		Thumb::make(self::UPLOAD_URL . $file_name, self::$preview_thumbs);
+		return $file_name;
+	}
 
     public static function uploadIcon($image) {
 		$file_name = md5(uniqid(rand(), true)) . '_' . time() . '.' . Str::lower($image->getClientOriginalExtension());

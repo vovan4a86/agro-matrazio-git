@@ -2,70 +2,47 @@
 @section('content')
     @include('blocks.bread')
     <main>
-        <!--section.catalog-->
         <section class="catalog page">
             <div class="catalog__container container">
                 <div class="catalog__heading page__heading">
-                    <div class="catalog__title page__title">Каталог продукции</div>
+                    <h1 class="catalog__title page__title">{{ $h1 }}</h1>
                 </div>
                 <div class="catalog__grid">
-                    <div class="catalog__main">
-                        <!--.prods-view-->
-                        <div class="prods-view">
-                            <div class="prods-view__bg lazy" data-bg="/static/images/common/prods-view-1.webp"></div>
-                            <div class="prods-view__body">
-                                <a class="prods-view__head" href="javascript:void(0)">Резиновые маты для содержания
-                                    КРС</a>
-                                <ul class="prods-view__list list-reset">
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">Матрасная система в
-                                            боксы для отдыха</a>
-                                    </li>
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">Рулонные резиновые
-                                            покрытия для содержания</a>
-                                    </li>
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">Беспривязное
-                                            содержание в боксы для отдыха</a>
-                                    </li>
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">Привязное содержание
-                                            в стойло-место</a>
-                                    </li>
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">Навозные проходы,
-                                            галереи в том числе для щелевых полов</a>
-                                    </li>
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">Переходы, галереи,
-                                            зоны поилок и чесалок</a>
-                                    </li>
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">ДМБ, накопители, для
-                                            доильных установок в том числе Карусель</a>
-                                    </li>
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">Родильное отделение,
-                                            для содержания молодняка и МРС</a>
-                                    </li>
-                                    <li class="prods-view__list-item">
-                                        <a class="prods-view__list-link" href="javascript:void(0)">Покрытия для
-                                            передвижения людей</a>
-                                    </li>
-                                </ul>
+                    @foreach($categories as $category)
+                        @if($loop->first)
+                            <div class="catalog__main">
+                                <div class="prods-view">
+                                    <div class="prods-view__bg lazy"
+                                         data-bg="{{ $category->thumb(2) }}"></div>
+                                    <div class="prods-view__body">
+                                        <a class="prods-view__head"
+                                           href="{{ $category->url }}">{{ $category->name }}</a>
+                                        @if(count($category->products))
+                                            <ul class="prods-view__list list-reset">
+                                                @foreach($category->products()->limit(9)->get() as $children)
+                                                    <li class="prods-view__list-item">
+                                                        <a class="prods-view__list-link" href="{{ $children->url }}">
+                                                            {{ $children->name }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="catalog__other">
-                        <!--.prods-view-->
-                        <div class="prods-view">
-                            <div class="prods-view__bg lazy" data-bg="/static/images/common/prods-view-2.webp"></div>
-                            <div class="prods-view__body">
-                                <a class="prods-view__head" href="javascript:void(0)">Стальные каркасы для ферм</a>
+                        @else
+                            <div class="catalog__other">
+                                <div class="prods-view">
+                                    <div class="prods-view__bg lazy"
+                                         data-bg="{{ $category->thumb(3) }}"></div>
+                                    <div class="prods-view__body">
+                                        <a class="prods-view__head" href="{{ $category->url }}">{{ $category->name }}</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        @endif
+                    @endforeach
                     <div class="catalog__brand">
                         <!--.brand-label-->
                         <div class="brand-label">

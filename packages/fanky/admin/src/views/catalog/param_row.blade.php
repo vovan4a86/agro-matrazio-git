@@ -1,5 +1,6 @@
 <tr id="param{{ $param->id }}" data-id="{{ $param->id }}">
-    <td>{{ $param->name }}</td>
+    <td width="40"><i class="fa fa-ellipsis-v"></i> <i class="fa fa-ellipsis-v"></i></td>
+    <td width="420">{{ $param->name }}</td>
     <td>{{ $param->value }}</td>
     <td>
         <a href="{{ route('admin.catalog.edit_param', [$param->id]) }}"

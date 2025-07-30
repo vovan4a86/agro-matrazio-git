@@ -99,15 +99,6 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
         Route::get('search', $controller . 'search')
             ->name('.search');
 
-        Route::get('export', $controller . 'getExportFile')
-            ->name('.export');
-
-        Route::post('import-price', $controller . 'postImportPrice')
-            ->name('.import-price');
-
-        Route::get('import-price-now', $controller . 'postImportPriceNow')
-            ->name('.import-price-now');
-
 		Route::get('products/{id?}', $controller . 'getProducts')
 			->name('.products');
 
@@ -125,6 +116,9 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
 
 		Route::post('catalog-delete/{id}', $controller . 'postCatalogDelete')
 			->name('.catalogDel');
+
+        Route::post('catalog-delete-preview/{id}', $controller . 'postCatalogDeletePreview')
+            ->name('.delete-preview');
 
         Route::get('product-edit/{id?}', $controller . 'getProductEdit')
             ->name('.productEdit');
@@ -153,21 +147,6 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
 		Route::post('product-image-order', $controller . 'postProductImageOrder')
 			->name('.productImageOrder');
 
-        Route::post('product-doc-upload/{id}', $controller . 'postProductDocUpload')
-            ->name('.productDocUpload');
-
-        Route::post('product-doc-delete/{id}', $controller . 'postProductDocDelete')
-            ->name('.productDocDel');
-
-        Route::post('product-doc-order', $controller . 'postProductDocOrder')
-            ->name('.productDocOrder');
-
-        Route::post('product-doc-edit/{id}', $controller . 'postProductDocEdit')
-            ->name('.productDocEdit');
-
-        Route::post('product-doc-data-save/{id}', $controller . 'postProductDocDataSave')
-            ->name('.productDocDataSave');
-
 		Route::get('get-catalogs/{id?}', $controller . 'getGetCatalogs')
 			->name('.get_catalogs');
 
@@ -191,13 +170,6 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
             'as'   => '.save_param',
             'uses' => $controller . 'postSaveParam'
         ]);
-
-        //related
-        Route::get('related-find', $controller . 'getRelatedFind')
-            ->name('.related-find');
-
-        Route::post('related-attach', $controller . 'postRelatedAttach')
-            ->name('.related-attach');
 
         //mass
         Route::post('move-products', [

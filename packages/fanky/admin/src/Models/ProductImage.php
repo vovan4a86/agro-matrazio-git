@@ -36,9 +36,8 @@ class ProductImage extends Model {
 
 	public static $thumbs = [
 		1 => '100x100', //admin product_list
-		2 => '262x260', //card item
-		3 => '131x90', //product thumb slider
-		4 => '645x564', //product slider
+		2 => '320x300', //card item
+		3 => '400x400', //product thumb slider
 	];
 
     public function product() {

@@ -39,12 +39,15 @@
                 {!! Form::groupText('title', $catalog->title, 'Title') !!}
                 {!! Form::groupText('keywords', $catalog->keywords, 'keywords') !!}
                 {!! Form::groupText('description', $catalog->description, 'description') !!}
+                {!! Form::groupText('og_title', $catalog->og_title, 'OgTitle') !!}
+                {!! Form::groupText('og_description', $catalog->og_description, 'OgDescription') !!}
+
 
                 <div class="form-group" style="display: flex; column-gap: 30px;">
                     <div>
-                        <label for="article-image">Изображение</label>
+                        <label for="article-image">Изображение (845x576)</label>
                         <input id="article-image" type="file" name="image" accept=".png,.jpeg,.jpg"
-                               onchange="return newsImageAttache(this, event)">
+                               onchange="return catalogImageAttache(this, event)">
                         <div id="article-image-block">
                             @if ($catalog->image)
                                 <img class="img-polaroid"
@@ -90,7 +93,28 @@
             </div>
 
             <div class="tab-pane" id="tab_2">
-                {!! Form::groupRichtext('text', $catalog->text, 'Основной текст', ['rows' => 3]) !!}
+                <div class="form-group" style="display: flex; column-gap: 30px;">
+                    <div>
+                        <label for="preview-image">Главное изображение (1270x440)</label>
+                        <input id="preview-image" type="file" name="image" accept=".png,.jpeg,.jpg"
+                               onchange="return previewImageAttache(this, event)">
+                        <div id="preview-image-block">
+                            @if ($catalog->image_text_preview)
+                                <img class="img-polaroid"
+                                     src="{{ $catalog->preview_thumb(1) }}"
+                                     data-image="{{ $catalog->image_preview_src }}"
+                                     onclick="return popupImage($(this).data('image'))" alt="image">
+                                <a class="images_del" href="{{ route('admin.catalog.delete-preview', [$catalog->id]) }}"
+                                   onclick="return previewImageDel(this, event)">
+                                    <span class="glyphicon glyphicon-trash text-red"></span></a>
+                            @else
+                                <p class="text-yellow">Изображение не загружено.</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                {!! Form::groupTextarea('announce', $catalog->announce, 'Заголовок') !!}
+                {!! Form::groupRichtext('text', $catalog->text, 'Основной текст') !!}
             </div>
         </div>
 
