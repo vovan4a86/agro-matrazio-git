@@ -1,1 +1,2 @@
 import './heroSlider';
+import './productSlider';

@@ -1,6 +1,5 @@
 import 'focus-visible';
 import './modules';
-import './plugins';
 import { utils } from './modules/utility';
 import { scrollTop } from './modules/scrollTop';
 import { maskedInputs } from './modules/inputMask';

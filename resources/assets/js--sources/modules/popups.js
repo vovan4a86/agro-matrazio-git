@@ -4,7 +4,6 @@ export const closeBtn =
   '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M25 7 7 25M25 25 7 7"/></svg>';
 
 Fancybox.bind('[data-fancybox]', {
-  closeButton: 'outside',
   showClass: 'f-fadeIn',
   hideClass: 'f-fadeOut',
   Carousel: {
@@ -17,7 +16,6 @@ Fancybox.bind('[data-popup]', {
   template: { closeButton: closeBtn },
   showClass: 'f-fadeIn',
   hideClass: 'f-fadeOut',
-  // hideScrollbar: false,
   on: {
     reveal: (e, trigger) => {
       // отправка данных в попап из кнопки
