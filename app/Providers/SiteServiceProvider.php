@@ -16,12 +16,6 @@ class SiteServiceProvider extends ServiceProvider {
 	public function boot() {
 		// пререндер для шаблона
 		View::composer(['template'], function (\Illuminate\View\View $view) {
-//		    $catalog_menu = Cache::get('catalog_menu', collect());
-//            if(!count($catalog_menu)) {
-//                $catalog_menu = Catalog::getTopLevel();
-//                Cache::add('catalog_menu', $catalog_menu, now()->addMinutes(60));
-//            }
-
             $header_menu = Cache::get('header_menu', collect());
             if(!count($header_menu)) {
                 $header_menu = Page::query()
