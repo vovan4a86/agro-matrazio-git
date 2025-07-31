@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Fanky\Admin\Models\Catalog;
 use Fanky\Admin\Models\City;
 use Fanky\Admin\Models\Feedback;
 use Fanky\Admin\Models\Order as Order;
@@ -152,9 +153,10 @@ class AjaxController extends Controller
         $excludeRegionAlias = true;
 
         $cities_aliases = City::pluck('alias')->all();
+        $exclude_aliases = array_merge(Page::$regionAlias, $cities_aliases);
 
         $path = explode('/', $cur_url);
-        foreach ($cities_aliases as $alias) {
+        foreach ($exclude_aliases as $alias) {
             if (in_array($alias, $path)) {
                 $excludeRegionAlias = false;
                 break;

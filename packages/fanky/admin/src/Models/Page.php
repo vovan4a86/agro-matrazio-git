@@ -68,24 +68,24 @@ class Page extends Model {
     public static $excludeRegionAlias = [
         'ajax',
         'about',
-        'reviews',
         'policy',
-        'partners',
-        'cart',
+        'cookie',
+        'personal',
         'search',
         'contacts',
-        'payments',
-        'news',
-        'reviews'
+        'news'
+    ];
+
+    public static $regionAlias = [
+        'catalog',
     ];
 
     public static $excludePageImage = [
         'catalog',
-        'discount',
         'policy'
     ];
 
-    public static $excludePageText = ['discount'];
+    public static $excludePageText = [''];
 
 	public static function boot() {
 		parent::boot();

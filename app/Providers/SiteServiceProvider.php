@@ -1,6 +1,7 @@
 <?php namespace App\Providers;
 
 use Cache;
+use Fanky\Admin\Models\City;
 use Illuminate\Support\ServiceProvider;
 use View;
 use Fanky\Admin\Models\Catalog;
@@ -48,10 +49,17 @@ class SiteServiceProvider extends ServiceProvider {
                 Cache::add('footer_menu', $footer_menu, now()->addMinutes(60));
             }
 
+            if (!$city_alias = session('city_alias')) {
+                $current_city = null;
+            } else {
+                $current_city = City::whereAlias($city_alias)->first();
+            }
+
 			$view->with(compact(
                 'header_menu',
                 'mobile_menu',
                 'footer_menu',
+                'current_city'
             ));
 		});
 

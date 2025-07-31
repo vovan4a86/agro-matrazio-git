@@ -26,7 +26,7 @@
                     <svg class="svg-sprite-icon icon-pin" width="1em" height="1em">
                         <use xlink:href="/static/images/sprite/symbol/sprite.svg#pin"></use>
                     </svg>
-                    <span class="city-btn__label">Екатеринбург</span>
+                    <span class="city-btn__label">{{ $current_city ? $current_city->name : 'Екатеринбург' }}</span>
                 </button>
             </div>
             <div class="header__columns">
