@@ -45,8 +45,8 @@ Fancybox.bind('[data-cities]', {
   template: { closeButton: closeBtn }
 });
 
-export const showSuccessRequestDialog = ({ title, text }) => {
-  Fancybox.show([{ src: '#request-done', type: 'inline' }], {
+export const showSuccessDialog = ({ title, text }) => {
+  Fancybox.show([{ src: '#complete-popup', type: 'inline' }], {
     mainClass: 'popup--custom popup--complete',
     template: { closeButton: closeBtn },
     showClass: 'f-fadeIn',
@@ -54,8 +54,8 @@ export const showSuccessRequestDialog = ({ title, text }) => {
     on: {
       reveal: (e, trigger) => {
         const popup = trigger.contentEl;
-        const popupTitle = popup.querySelector('.popup__title');
-        const popupText = popup.querySelector('.popup__text');
+        const popupTitle = popup.querySelector('[data-popup-title]');
+        const popupText = popup.querySelector('[data-popup-text]');
 
         if (popupTitle) popupTitle.textContent = title || '';
         if (popupText) popupText.textContent = text || '';
@@ -65,9 +65,17 @@ export const showSuccessRequestDialog = ({ title, text }) => {
 };
 
 // в свой модуль форм, импортируешь функцию вызова «спасибо» → вызываешь on success
-// import { showSuccessRequestDialog } from 'путь до компонента'
+// import { showSuccessDialog } from 'путь до компонента'
 // вызываешь где нужно
-// showSuccessRequestDialog({
-//   title: 'Ваше сообщение успешно отправлено!',
-//   text: 'Мы свяжемся с вами в ближайшее время!'
+// showSuccessDialog({
+//   title: 'Ваша заявка успешно отправлена!',
+//   text: 'Благодарим за обращение'
+// });
+// showSuccessDialog({
+//   title: 'Спасибо!',
+//   text: 'Ваше сообщение успешно отправлено'
+// });
+// showSuccessDialog({
+//   title: 'Спасибо!',
+//   text: 'Мы ответим Вам в ближайшее время'
 // });

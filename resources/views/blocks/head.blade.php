@@ -24,6 +24,7 @@
     <link rel="preload" href="/static/fonts/Geologica-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/static/fonts/Geologica-Medium.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/static/fonts/Geologica-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" as="image" href="/static/images/common/popup-bg.webp">
     <link rel="stylesheet" type="text/css" href="{{ mix('static/css/all.css') }}" media="all">
     <script src="{{ mix('static/js/all.js') }}" defer></script>
 

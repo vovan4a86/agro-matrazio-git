@@ -5,3 +5,4 @@ import './popups';
 import './tables';
 import './truncateText.js';
 import './sliders/index';
+import './customFront';

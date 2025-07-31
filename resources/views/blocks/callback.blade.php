@@ -1,4 +1,4 @@
-<section class="s-callback">
+<section class="s-callback" id="s-callback">
     <div class="s-callback__bg lazy" data-bg="/static/images/common/callback-bg.webp"></div>
     <div class="s-callback__container container container--small">
         <div class="s-callback__grid">
@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="s-callback__col">
-                <form class="b-form" action="#">
+                <form class="b-form" action="{{ route('ajax.write') }}">
                     <div class="b-form__fields">
                         <input class="b-form__field" type="text" name="name" placeholder="Ваше имя" required="required" />
                         <input class="b-form__field" type="tel" name="phone" placeholder="Телефон" required="required" />

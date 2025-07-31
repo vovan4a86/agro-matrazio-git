@@ -5,6 +5,10 @@ use App\Http\Controllers\AjaxController;
 Route::get('robots.txt', 'PageController@robots')->name('robots');
 
 Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function () {
+    Route::post('callback', [AjaxController::class, 'postCallback'])->name('callback');
+    Route::post('write', [AjaxController::class, 'postWrite'])->name('write');
+    Route::post('order', [AjaxController::class, 'postOrder'])->name('order');
+
     Route::get('show-popup-cities', [AjaxController::class, 'showCitiesPopup'])->name('show-popup-cities');
     Route::post('set-city', [AjaxController::class, 'postSetCity'])->name('set-city');
     Route::post('get-correct-region-link', [AjaxController::class, 'postGetCorrectRegionLink'])
