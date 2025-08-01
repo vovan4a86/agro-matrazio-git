@@ -22,7 +22,7 @@
         <div class="header__top">
             <div class="header__city">
                 <button class="city-btn btn-reset" type="button" data-src="{{ route('ajax.show-popup-cities') }}"
-                        data-fancybox="data-cities" data-type="ajax">
+                        data-cities data-type="ajax">
                     <svg class="svg-sprite-icon icon-pin" width="1em" height="1em">
                         <use xlink:href="/static/images/sprite/symbol/sprite.svg#pin"></use>
                     </svg>
