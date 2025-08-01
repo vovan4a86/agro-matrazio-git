@@ -6,7 +6,7 @@
         <section class="contacts page">
             <div class="contacts__container container">
                 <div class="contacts__heading page__heading">
-                    <div class="contacts__title page__title">Контакты</div>
+                    <h1 class="contacts__title page__title">{{ $h1 }}</h1>
                 </div>
                 <div class="contacts__grid">
                     @if($contacts = S::get('contacts'))

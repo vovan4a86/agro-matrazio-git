@@ -5,9 +5,6 @@
 
 <body x-data="{ overlayIsOpen: false }">
     {!! Settings::get('counters') !!}
-
-{{--    <h1 class="v-hidden">{{ $h1 ?? '' }}</h1>--}}
-
     @include('blocks.header')
     @include('blocks.mob_nav')
     @include('blocks.overlay')

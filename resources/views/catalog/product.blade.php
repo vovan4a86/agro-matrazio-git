@@ -6,7 +6,7 @@
         <section class="product page">
             <div class="product__container container">
                 <div class="product__heading page__heading">
-                    <div class="product__title page__title">{{ $h1 }}</div>
+                    <h1 class="product__title page__title">{{ $h1 }}</h1>
                 </div>
                 <div class="product__grid">
                     <div class="product__slider">
@@ -52,9 +52,11 @@
                         </div>
                     </div>
                     <div class="product__body">
-                        <div class="product__heading page__heading">
-                            <div class="product__title page__subtitle">Cow mattress type 1</div>
-                        </div>
+                        @if($product->text_title)
+                            <div class="product__heading page__heading">
+                                <div class="product__title page__subtitle">{{ $product->text_title }}</div>
+                            </div>
+                        @endif
                         @if($text)
                             <div class="product__text text-block">
                                 {!! $text !!}
@@ -87,70 +89,18 @@
                 </div>
             </div>
         </section>
-        <!--section.seo.is-gray-->
-        <section class="seo is-gray">
-            <div class="seo__container container">
-                <div class="seo__text text-block">
-                    <p>
-                        <strong>Мы долгие годы сотрудничаем с проектными организациями и производителями стальных
-                            каркасов для коровников.</strong>&nbsp; При обращении к нам, мы заложим на этапе
-                        проектирования стойловое оборудование производства «Завода Агросталь».</p>
-                    <p>Вы получите каркас по цене завода изготовителя с готовой планировкой стойлового оборудования,
-                        понятным качеством и сроками поставки. Это позволит сэкономить ваши средства и время при
-                        проектировании, монтаже и вводе в эксплуатацию объекта.</p>
+        @if($product->text_description)
+            <section class="seo is-gray">
+                <div class="seo__container container">
+                    <div class="seo__text text-block">
+                        {!! $product->text_description !!}
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
         <!--section.s-about.-small-->
         <section class="s-about s-about--small">
-            <div class="s-about__bottom">
-                <div class="s-about__container container">
-                    <div class="s-about__heading page__heading">
-                        <div class="s-about__title page__title">Преимущества работы с нами</div>
-                    </div>
-                    <div class="s-about__feats">
-                        <!--.feat-item-->
-                        <div class="feat-item">
-                            <div class="feat-item__view">
-                                <div class="feat-item__icon lazy" data-bg="/static/images/common/feat-icon-1.svg"></div>
-                            </div>
-                            <div class="feat-item__title">Комплексный подход</div>
-                        </div>
-                        <!--.feat-item-->
-                        <div class="feat-item">
-                            <div class="feat-item__view">
-                                <div class="feat-item__icon lazy" data-bg="/static/images/common/feat-icon-2.svg"></div>
-                            </div>
-                            <div class="feat-item__title">Опыт с 2008 года</div>
-                        </div>
-                        <!--.feat-item-->
-                        <div class="feat-item">
-                            <div class="feat-item__view">
-                                <div class="feat-item__icon lazy" data-bg="/static/images/common/feat-icon-3.svg"></div>
-                            </div>
-                            <div class="feat-item__title">Высокое качество продукции</div>
-                        </div>
-                        <!--.feat-item-->
-                        <div class="feat-item">
-                            <div class="feat-item__view">
-                                <div class="feat-item__icon lazy" data-bg="/static/images/common/feat-icon-4.svg"></div>
-                            </div>
-                            <div class="feat-item__title">Сотни довольных клиентов</div>
-                        </div>
-                    </div>
-                    <div class="s-about__brand">
-                        <!--+brand-label()(class="brand-label--small")-->
-                        <!--.brand-label-->
-                        <div class="brand-label brand-label--small">
-                            <span class="brand-label__title">В комплекте всегда выгоднее!</span>
-                            <img class="brand-label__img no-select" src="/static/images/common/brand-label.svg"
-                                 width="168" height="57" alt="alt" loading="lazy"/>
-                        </div>
-                    </div>
-                </div>
-                <img class="s-about__decor no-select" src="/static/images/common/about-decor.png" width="410"
-                     height="507" loading="lazy" alt="Агросталь-Комплект"/>
-            </div>
+            @include('blocks.features', ['title' => 'Преимущества работы с нами'])
         </section>
     </main>
     @include('blocks.callback')

@@ -43,12 +43,6 @@ Route::group(['middleware' => ['redirects', 'regions']], function() {
     Route::get('/', ['as' => 'main', 'uses' => 'WelcomeController@index']);
 
     Route::any('contacts', ['as' => 'contacts', 'uses' => 'PageController@contacts']);
-    Route::any('about', function() {
-        abort(404, 'Страница не найдена');
-    });
-
-//    Route::any('news', ['as' => 'news', 'uses' => 'NewsController@index']);
-//    Route::get('news/{alias}', ['as' => 'news.item', 'uses' => 'NewsController@item']);
 
     Route::any('catalog', ['as' => 'catalog.index', 'uses' => 'CatalogController@index']);
     Route::any('catalog/{alias}', ['as' => 'catalog.view', 'uses' => 'CatalogController@view'])

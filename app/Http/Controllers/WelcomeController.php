@@ -15,7 +15,6 @@ class WelcomeController extends Controller {
         $main_categories = S::get('main_categories');
 
         $main_about = S::get('main_about');
-        $main_features = S::get('main_features');
 
         return response()->view('pages.index', [
             'page' => $page,
@@ -24,7 +23,6 @@ class WelcomeController extends Controller {
             'main_slider' => $main_slider,
             'main_categories' => $main_categories,
             'main_about' => $main_about,
-            'main_features' => $main_features,
         ]);
     }
 }
