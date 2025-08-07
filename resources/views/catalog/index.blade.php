@@ -48,7 +48,7 @@
                         <div class="brand-label">
                             <span class="brand-label__title">В комплекте всегда выгоднее!</span>
                             <img class="brand-label__img no-select" src="/static/images/common/brand-label.svg"
-                                 width="168" height="57" alt="alt" loading="lazy"/>
+                                 width="168" height="57" alt="slogan" loading="lazy"/>
                         </div>
                     </div>
                 </div>

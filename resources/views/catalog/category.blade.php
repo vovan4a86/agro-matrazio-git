@@ -11,7 +11,7 @@
                 @if($category->image_text_preview)
                     <div class="preview__view">
                         <img class="preview__img no-select" src="{{ $category->preview_thumb(2) }}" width="1270"
-                             height="440" alt="{{ $category->name }}"/>
+                             height="440" title="{{ $category->name }}" alt="{{ $category->name }}"/>
                     </div>
                 @endif
                 <div class="preview__body">
@@ -45,8 +45,7 @@
                             <a class="prods__view" href="{{ $product->url }}" title="{{ $product->name }}">
                                 @if($product->single_image)
                                     <img class="prods__img no-select" src="{{ $product->single_image->thumb(2) }}"
-                                         width="320"
-                                         height="300" alt="{{ $product->name }}" loading="lazy"/>
+                                         width="320" height="300" alt="{{ $product->name }}" title="{{ $product->name }}" loading="lazy"/>
                                 @endif
                             </a>
                             <div class="prods__body">

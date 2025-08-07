@@ -25,8 +25,9 @@
                                             <a class="slider__link" href="{{ $image->image_src }}"
                                                data-fancybox="product-gallery" data-caption="{{ $product->name }}"
                                                title="{{ $product->name }}">
-                                                <img class="slider__img" src="{{ $image->thumb(3) }}" width="407"
-                                                     height="407" alt="{{ $product->name }}" loading="lazy"/>
+                                                <img class="slider__img" src="{{ $image->thumb(3) }}"
+                                                     width="407" height="407"
+                                                     title="{{ $product->name }}"alt="{{ $product->name }}" loading="lazy"/>
                                             </a>
                                         </li>
                                     @endforeach
