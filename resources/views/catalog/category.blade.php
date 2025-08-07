@@ -37,6 +37,37 @@
                 </div>
             </div>
         </section>
+        @if(count($public_children))
+            <section class="prods page">
+                <div class="prods__container container">
+                    @foreach($public_children as $children)
+                        <div class="prods__item">
+                            <a class="prods__view" href="{{ $children->url }}" title="{{ $children->name }}">
+                                @if($children->image)
+                                    <img class="prods__img no-select" src="{{ $children->thumb(4) }}"
+                                         width="320" height="300" alt="{{ $children->name }}"
+                                         title="{{ $children->name }}" loading="lazy"/>
+                                @endif
+                            </a>
+                            <div class="prods__body">
+                                <div class="prods__heading page__subheading">
+                                    <a class="prods__title page__subtitle"
+                                       href="{{ $children->url }}">{{ $children->name }}</a>
+                                </div>
+                                @if($children->announce)
+                                    <div class="prods__text text-block">
+                                        {!! $children->announce !!}
+                                    </div>
+                                @endif
+                                <div class="prods__actions">
+                                    <a class="button" href="{{ $children->url }}">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+        @endif
         @if(count($products))
             <section class="prods page">
                 <div class="prods__container container">

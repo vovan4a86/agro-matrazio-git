@@ -635,7 +635,6 @@ class AdminCatalogController extends AdminController
         if ($item_ids) {
             $products = Product::whereIn('id', $item_ids)->get();
             foreach ($products as $product) {
-                $product->additional_catalogs()->detach();
                 $product->delete();
             }
         }
@@ -667,8 +666,6 @@ class AdminCatalogController extends AdminController
     {
         $images = Request::file('mass_images');
         $ids = Request::get('product_ids');
-
-//        \Debugbar::log($ids);
 
         if ($ids && $images) {
             foreach ($ids as $n => $id) {

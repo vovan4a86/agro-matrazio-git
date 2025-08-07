@@ -73,8 +73,9 @@ class Catalog extends Model {
 
 	public static $thumbs = [
 		1 => '100x100', //admin
-		2 => '845x576', //big one
+		2 => '1270x440', //big one
 		3 => '417x292', //small one
+		4 => '320x300', //small one
 	];
 
 	public static $preview_thumbs = [

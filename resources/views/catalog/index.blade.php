@@ -17,9 +17,9 @@
                                     <div class="prods-view__body">
                                         <a class="prods-view__head"
                                            href="{{ $category->url }}">{{ $category->name }}</a>
-                                        @if(count($category->products()->public()->get()))
+                                        @if(count($category->public_children))
                                             <ul class="prods-view__list list-reset">
-                                                @foreach($category->products()->public()->limit(9)->get() as $children)
+                                                @foreach($category->public_children()->limit(9)->get() as $children)
                                                     <li class="prods-view__list-item">
                                                         <a class="prods-view__list-link" href="{{ $children->url }}">
                                                             {{ $children->name }}

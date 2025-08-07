@@ -6,7 +6,7 @@
         <section class="product page">
             <div class="product__container container">
                 <div class="product__heading page__heading">
-                    <h1 class="product__title page__title">{{ $h1 }}</h1>
+                    <h1 class="product__title page__title">{{ $product->catalog->name }}</h1>
                 </div>
                 <div class="product__grid">
                     <div class="product__slider">
@@ -27,7 +27,7 @@
                                                title="{{ $product->name }}">
                                                 <img class="slider__img" src="{{ $image->thumb(3) }}"
                                                      width="407" height="407"
-                                                     title="{{ $product->name }}"alt="{{ $product->name }}" loading="lazy"/>
+                                                     title="{{ $product->name }}" alt="{{ $product->name }}" loading="lazy"/>
                                             </a>
                                         </li>
                                     @endforeach
@@ -53,9 +53,9 @@
                         </div>
                     </div>
                     <div class="product__body">
-                        @if($product->text_title)
+                        @if($product->name)
                             <div class="product__heading page__heading">
-                                <div class="product__title page__subtitle">{{ $product->text_title }}</div>
+                                <div class="product__title page__subtitle">{{ $product->name }}</div>
                             </div>
                         @endif
                         @if($text)

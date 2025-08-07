@@ -52,7 +52,7 @@
 
             <div class="tab-pane" id="tab_2">
                 {!! Form::groupRichtext('announce', $product->announce, 'Анонс для раздела') !!}
-                {!! Form::groupText('text_title', $product->text_title, 'Заголовок текста на странице товара') !!}
+{{--                {!! Form::groupText('text_title', $product->text_title, 'Заголовок текста на странице товара') !!}--}}
                 {!! Form::groupRichtext('text', $product->text, 'Текст на странице товара') !!}
                 {!! Form::groupRichtext('text_description', $product->text_description, 'Доп. текст перед преимуществами') !!}
             </div>

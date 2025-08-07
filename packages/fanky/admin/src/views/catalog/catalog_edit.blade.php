@@ -88,8 +88,8 @@
 
                 {!! Form::hidden('published', 0) !!}
                 {!! Form::groupCheckbox('published', 1, $catalog->published, 'Показывать раздел') !!}
-                {!! Form::hidden('on_main', 0) !!}
-                {!! Form::groupCheckbox('on_main', 1, $catalog->on_main, 'На главной') !!}
+{{--                {!! Form::hidden('on_main', 0) !!}--}}
+{{--                {!! Form::groupCheckbox('on_main', 1, $catalog->on_main, 'На главной') !!}--}}
             </div>
 
             <div class="tab-pane" id="tab_2">
