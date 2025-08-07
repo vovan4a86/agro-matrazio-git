@@ -68,7 +68,7 @@
                 </div>
             </section>
         @endif
-        @if(count($products))
+        @if(!count($public_children) && count($products))
             <section class="prods page">
                 <div class="prods__container container">
                     @foreach($products as $product)
