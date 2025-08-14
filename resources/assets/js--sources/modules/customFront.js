@@ -55,6 +55,15 @@ export const resetForm = (form) => {
     $(form).find('.invalid').attr('title', '').removeClass('invalid');
 }
 
+export const closeForm = (form) => {
+    const closeBtn = $('.popup .is-close-btn');
+    if(closeBtn.length > 0) {
+        closeBtn.click();
+    } else {
+        resetForm(form);
+    }
+}
+
 // //Выбор города в попапе
 $("body").on("click", ".cities-page__link", function(e) {
     e.preventDefault();
@@ -85,9 +94,9 @@ export const redirect_to_current_city = (city_id, cur_url) => {
     });
 }
 
-//Заказать звонок,  Вопрос, Заявка
+//Заказать звонок, Заявка
 export const sendForms = () => {
-    $('#callback-popup form, #write-popup form, #order-popup form, #s-callback form').submit(function (e) {
+    $('#callback-popup form, #order-popup form').submit(function (e) {
         e.preventDefault();
         const form = $(this);
         const url = $(form).attr('action');
@@ -95,18 +104,40 @@ export const sendForms = () => {
 
         sendAjax(url, data, function (json) {
             if (json.success) {
-                resetForm(form);
+                closeForm(form);
                 showSuccessDialog({
                     'title': 'Ваша заявка отправлена!',
                     'text': 'Наши менеджеры свяжутся с Вами в ближайшее время.'
                 });
-                form.find('.is-close').click();
             }
             if (json.errors) {
                 console.error(json.errors);
             }
-
         });
     })
 }
 sendForms();
+
+//отдельное сообщение для Вопросов
+export const sendQuestions = () => {
+    $('#write-popup form, #s-callback form').submit(function (e) {
+        e.preventDefault();
+        const form = $(this);
+        const url = $(form).attr('action');
+        const data = $(form).serialize();
+
+        sendAjax(url, data, function (json) {
+            if (json.success) {
+                closeForm(form);
+                showSuccessDialog({
+                    'title': 'Ваше сообщение отправлено!',
+                    'text': 'Наши менеджеры свяжутся с Вами в ближайшее время.'
+                });
+            }
+            if (json.errors) {
+                console.error(json.errors);
+            }
+        });
+    })
+}
+sendQuestions();
