@@ -198,30 +198,6 @@ class SiteHelper {
 		//разделы каталога
 		self::recurseAddCatalog($map);
 
-		//бренды
-		$items = Brand::wherePublished(1)->get();
-		foreach ($items as $item) {
-			$map->add_url($item->url);
-		}
-
-		//Новости и акции
-		$items = News::wherePublished(1)->get();
-		foreach ($items as $item) {
-			$map->add_url($item->url);
-		}
-
-		//Статьи
-		$items = Publication::wherePublished(1)->get();
-		foreach ($items as $item) {
-			$map->add_url($item->url);
-		}
-
-		//Объекты
-		$items = ObjectItem::wherePublished(1)->get();
-		foreach ($items as $item) {
-			$map->add_url($item->url);
-		}
-
 		$map->save();
 	}
 
